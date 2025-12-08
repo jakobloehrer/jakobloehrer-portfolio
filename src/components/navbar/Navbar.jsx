@@ -23,12 +23,12 @@ const Navbar = ({ aboutRef, workRef, contactRef }) => {
     if (prevSelectedLang) {
       i18n.changeLanguage(prevSelectedLang);
       setSelectedLang(prevSelectedLang);
-    } else setSelectedLang("en");
+    }
   }, []);
 
-  const changeLanguage = (lng) => {
+  const changeLanguage = async (lng) => {
     localStorage.setItem("SELECTED_LANGUAGE", lng);
-    i18n.changeLanguage(lng);
+   await i18n.changeLanguage(lng);
   };
 
 

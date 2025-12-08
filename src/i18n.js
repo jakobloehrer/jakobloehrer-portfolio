@@ -14,10 +14,9 @@ const resources = {
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: "en",
-  interpolation: {
+  lng: localStorage.getItem("SELECTED_LANGUAGE") || "en",
     escapeValue: false,
   },
-});
+);
 
 export default i18n;
