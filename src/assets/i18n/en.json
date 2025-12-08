@@ -7,7 +7,7 @@
   "ABOUT_ME": "About Me",
   "ABOUT_ME_TEXT": "Hello! I'm Jakob, a passionate developer based in Switzerland. I specialize in frontend web development, combining a strong focus on design and creativity to transform ideas into captivating projects and websites.",
   "CHARACTERISTICS": "Characteristics",
-  "CHARACERISTICS_TEXT": "At home in the Alps, I’m a 20-year-old passionate about design and web development. I love programming, being creative, fencing, skiing, music, plants, and spending time with friends.",
+  "CHARACERISTICS_TEXT": "At home in the Alps, I’m a {{age}}-year-old passionate about design and web development. I love programming, being creative, fencing, skiing, music, plants, and spending time with friends.",
   "DIE_TEXT": "One day, I’ll die.",
   "WHAT_DRIVES_ME_TEXT": "Life’s short, and that drives me to create, innovate, and embrace every moment. Challenges and possibilities keep me moving forward.",
   "SOCIALS": "Socials",
@@ -19,7 +19,7 @@
   "INVALID_EMAIL": "Invalid email address",
   "SUBJECT_REQUIRED": "Subject is required",
   "MESSAGE_REQUIRED": "Message is required",
-  "CONTACT_ME_TEXT": "Got a question, need help, or just want to chat? Drop me a message—I’d love to hear from you. Let’s connect!",
+  "CONTACT_ME_TEXT": "Got a question, need help, or just want to chat? Drop me a message, I’d love to hear from you. Let’s connect!",
   "FOOTER_TEXT": "Made by me with much ♥",
   "SEND": "Send",
   "BACK_TO_TOP": "Back to top"
