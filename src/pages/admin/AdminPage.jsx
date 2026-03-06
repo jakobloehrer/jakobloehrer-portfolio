@@ -4,9 +4,10 @@ import SectionTitle from "../../common/sectionTitle/SectionTitle";
 import ProjectCard from "../../sections/work/projectCard/projectCard";
 import ProjectForm from "./projectForm/ProjectForm";
 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, Firestore, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
+import FirestoreManagerPage from "./FirestoreManagerPage";
 
 const AdminPage = () => {
   const projectsRef = collection(db, "projects");
@@ -49,6 +50,7 @@ const AdminPage = () => {
           new project
         </button>
       </div>
+      <FirestoreManagerPage />
     </div>
 
 
