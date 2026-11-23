@@ -1,4 +1,22 @@
 :root {
+  // Shared wrapper – the only place .loader-wrapper is defined.
+  // Inline (e.g. WORK section): fills its parent's width, keeps space reserved.
+  .loader-wrapper {
+    width: 100%;
+    min-height: calc(232px - 15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // Full page (project pages): pinned to the viewport, independent of scrollbars / parents.
+    &.loader-wrapper--fullscreen {
+      position: fixed;
+      inset: 0;
+      width: auto;
+      min-height: 0;
+    }
+  }
+
   .loader {
     margin: auto;
 

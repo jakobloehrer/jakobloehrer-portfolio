@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase"; // Firebase config
 import TextBox from "../../common/textBox/TextBox";
-import { FiExternalLink } from "react-icons/fi";
+import { FiExternalLink, FiPlay } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import "./ProjectPage.scss";
 import { AiOutlineClose, AiOutlineArrowLeft } from "react-icons/ai";
@@ -16,7 +16,7 @@ const ProjectPage = () => {
   const { i18n } = useTranslation();
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState(null);
+  const [modalMedia, setModalMedia] = useState(null);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -41,19 +41,24 @@ const ProjectPage = () => {
     navigate("/", { state: { scrollToWork: true } });
   };
 
-  const openImageModal = (content) => {
-    setModalImage({imageUrl : content.imageUrl, title :content.title });
+  const openMediaModal = (type, content) => {
+    setModalMedia({
+      type,
+      url: type === "video" ? content.videoUrl : content.imageUrl,
+      posterUrl: content.posterUrl,
+      title: content.title,
+    });
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
-    setModalImage(null);
+    setModalMedia(null);
   };
 
   if (!project) {
     return   (
-      <div className="loader-wrapper">
+      <div className="loader-wrapper loader-wrapper--fullscreen">
         <Loader isLoading={!project} />
       </div>
     )
@@ -97,13 +102,46 @@ const ProjectPage = () => {
                         key={index}
                         className="image-wrapper widget"
                         onClick={() =>
-                          openImageModal(element.content)
+                          openMediaModal("image", element.content)
                         }
                       >
                         <img
                           src={element.content?.imageUrl}
                           alt={element.content?.title}
+                          loading="lazy"
                         />
+                        <span>{element.content?.title}</span>
+                      </button>
+                    );
+                  case "video":
+                    return (
+                      <button
+                        key={index}
+                        className="image-wrapper video-wrapper widget"
+                        onClick={() =>
+                          openMediaModal("video", element.content)
+                        }
+                      >
+                        <div className="video-preview">
+                          {element.content?.posterUrl ? (
+                            <img
+                              src={element.content.posterUrl}
+                              alt={element.content?.title}
+                              loading="lazy"
+                            />
+                          ) : (
+                            // Only metadata + first frame is fetched, not the whole file
+                            <video
+                              src={`${element.content?.videoUrl}#t=0.1`}
+                              preload="metadata"
+                              muted
+                              playsInline
+                            />
+                          )}
+                          <span className="play-icon">
+                            <FiPlay />
+                          </span>
+                        </div>
                         <span>{element.content?.title}</span>
                       </button>
                     );
@@ -153,7 +191,7 @@ const ProjectPage = () => {
               <div className="modal">
               <div className="modal-wrapper">
               <div className="modal-header">
-                <h2>{modalImage.title}</h2>
+                <h2>{modalMedia.title}</h2>
               <button className="close-button" onClick={closeModal}>
                     <AiOutlineClose />
                   </button>
@@ -163,11 +201,24 @@ const ProjectPage = () => {
                   onClick={(e) => e.stopPropagation()}
                 >
 
-                  <img
-                    src={modalImage.imageUrl}
-                    alt="Modal View"
-                    className="modal-image"
-                  />
+                  {modalMedia.type === "video" ? (
+                    // Streams via HTTP range requests – plays before fully downloaded
+                    <video
+                      src={modalMedia.url}
+                      poster={modalMedia.posterUrl}
+                      className="modal-image"
+                      controls
+                      autoPlay
+                      playsInline
+                      preload="auto"
+                    />
+                  ) : (
+                    <img
+                      src={modalMedia.url}
+                      alt="Modal View"
+                      className="modal-image"
+                    />
+                  )}
                 </div>
               </div>
               </div>
